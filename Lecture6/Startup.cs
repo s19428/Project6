@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Lecture6.Helpers;
 
 namespace Lecture6
 {
@@ -21,6 +22,8 @@ namespace Lecture6
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            DataLogger.ClearLog(DataLogger.requestsLogFile);
         }
 
         public IConfiguration Configuration { get; }
@@ -30,7 +33,7 @@ namespace Lecture6
         {
             services.AddControllers();
 
-            services.AddScoped<IDbService, SqlServerDbService>();
+            services.AddScoped<IDbService, DbService>();
 
             //Swagger documentation
             services.AddSwaggerGen(c =>
@@ -46,6 +49,32 @@ namespace Lecture6
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            /*
+            string indexName = "Index";
+
+            app.Use(async (context, next) =>
+            {
+                if (!context.Request.Headers.ContainsKey(indexName))
+                {
+                    context.Response.StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized;
+                    await context.Response.WriteAsync("No Index found in header");
+                    return;
+                }
+                else 
+                {
+                    string index = context.Request.Headers[indexName].ToString();
+
+                    //...
+                    // Check if this student is in the database
+                    //...
+
+                    // 401 if not found
+                    //return;
+                }
+                await next();
+            });
+            */
 
             //Documentation
             app.UseSwagger();

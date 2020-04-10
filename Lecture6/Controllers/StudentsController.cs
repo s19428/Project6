@@ -1,45 +1,87 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Lecture6.Exceptions;
+using Lecture6.Services;
 using Lecture6.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Lecture6.Controllers
 {
-    [Route("api/students")]
     [ApiController]
+    [Route("api/students")]
     public class StudentsController : ControllerBase
     {
+        /*
         [HttpGet]
-        public IActionResult GetStudents()
+        public string GetStudent()
         {
-            var list = new List<Student>();
-            list.Add(new Student
-            {
-                IdStudent = 1,
-                FirstName = "Jan",
-                LastName = "Kowalski"
-            });
-            list.Add(new Student
-            {
-                IdStudent = 2,
-                FirstName = "Andrzej",
-                LastName = "Malewicz"
-            });
+            return "Student1, Student2, Student3";
+        }
+        */
 
-            throw new StudentCannotDefendException("Student cannot defend because....");
+        /*
+        [HttpGet("{id}")]
+        public IActionResult GetStudent(int id)
+        {
+            if (id == 1)
+            {
+                return Ok("Student1");
+            }
+            else if (id == 2)
+            {
+                return Ok("Student2");
+            }
 
-            return Ok(list);
+            return NotFound("Student not found");
+        }
+        */
+
+        private readonly IDbService _dbService;
+
+        public StudentsController(IDbService dbService)
+        {
+            _dbService = dbService;
         }
 
-        [HttpGet("{index}")]
-        public IActionResult GetStudent(string index)
+        [HttpGet("{name}")]
+        public IActionResult GetStudent(string name)
         {
-            return Ok(new Student { FirstName = "Andrzej", LastName = "Malewicz" });
+            //return $"Student1, Student2, Student3 orderBy = {orderBy}";
+            return Ok(_dbService.GetStudent(name));
         }
 
+        //[Route("semesterEntries")]
+        [HttpGet("semesterEntries/{IndexNumber}")]
+        public IActionResult GetSemesterEntries(int IndexNumber)
+        {
+            //return Ok("" + IndexNumber);
+            return Ok(_dbService.GetSemesterEntries(IndexNumber));
+        }
+
+        [HttpPost]
+        public IActionResult CreteStudent(Student student)
+        {
+            student.IndexNumber = $"s{new Random().Next(0, 20000)}";
+            return Ok(student);
+        }
+
+        [HttpPut]
+        public IActionResult PutStudent(int id)
+        {
+            Student s = new Student();
+            s.StudentID = id;
+            //.......... Perform update of sth
+
+            return Ok($"UpdateCompleted {id}");
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteStudent(int id)
+        {
+            // ............. delete student with wtis id
+
+            return Ok($"Student deleted {id}");
+        }
     }
 }

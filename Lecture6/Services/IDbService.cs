@@ -1,5 +1,4 @@
-﻿using Lecture6.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,10 +7,12 @@ namespace Lecture6.Services
 {
     public interface IDbService
     {
-        IEnumerable<Student> GetStudents();
+        public IEnumerable<Student> GetStudents();
+        public Student GetStudent(string name);
+        public List<int> GetSemesterEntries(int studentId);
 
-        Student GetStudentByIndex(string index);
+        public Student GetStudentByIndex(string index);
 
-        void SaveLogData(string data);
+        public void SaveLogData(string data);
     }
 }
