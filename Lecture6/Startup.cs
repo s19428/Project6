@@ -50,7 +50,7 @@ namespace Lecture6
                 app.UseDeveloperExceptionPage();
             }
 
-            /*
+            
             string indexName = "Index";
 
             app.Use(async (context, next) =>
@@ -74,7 +74,7 @@ namespace Lecture6
                 }
                 await next();
             });
-            */
+            
 
             //Documentation
             app.UseSwagger();
