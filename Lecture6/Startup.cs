@@ -119,9 +119,7 @@ namespace Lecture6
 
             app.UseRouting();  // api/students GET -> StudentsController, GetStudents
 
-            //app.UseAuthorization(); -- dont have permissions for this resource
-
-            app.UseEndpoints(endpoints => // new StudentsController(?).GetStudents();
+            app.UseEndpoints(endpoints => 
             {
                 endpoints.MapControllers();
             });

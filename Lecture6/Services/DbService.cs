@@ -99,48 +99,6 @@ namespace Lecture6.Services
             DataLogger.WriteToLogFile(DataLogger.requestsLogFile, data);
 
             InsertInto_RequestsLog(data);
-                
-                /*
-            int id = -1;
-
-            {
-                string sqlString = "Select MAX(Id) as Id From RequestsLog;";
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    using (var com = new SqlCommand(sqlString))
-                    {
-                        com.Connection = con;
-                        com.CommandText = sqlString;
-
-                        con.Open();
-                        var dr = com.ExecuteReader();
-                        while (dr.Read())
-                        {
-                            id = Int32.Parse(dr["Id"].ToString());
-                        }
-                    }
-                }
-            }
-
-            {
-                string sqlString = "Insert into RequestsLog values (@id, @data);";
-
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    using (var com = new SqlCommand(sqlString))
-                    {
-                        com.Connection = con;
-                        com.CommandText = sqlString;
-                        com.Parameters.AddWithValue("id", id);
-                        com.Parameters.AddWithValue("data", data);
-
-                        con.Open();
-                        com.BeginExecuteNonQuery();
-                    }
-                }
-            }
-            */
-            
         }
 
         public Student GetStudentByIndex(string index)
@@ -171,19 +129,6 @@ namespace Lecture6.Services
                     }
                 }
             }
-            
-            /*
-            var dr = Execute("Select * From Student");
-            while (dr.Read())
-            {
-                var st = new Student();
-                st.FirstName = dr["FirstName"].ToString();
-                st.LastName = dr["LastName"].ToString();
-                st.IndexNumber = dr["IndexNumber"].ToString();
-                //...
-                _students.Add(st);
-            }
-            */
 
             return _students;
         }
@@ -205,7 +150,7 @@ namespace Lecture6.Services
                         st.FirstName = dr["FirstName"].ToString();
                         st.LastName = dr["LastName"].ToString();
                         st.IndexNumber = dr["IndexNumber"].ToString();
-                        //...
+
                         return st;
                     }
                 }
@@ -231,7 +176,7 @@ namespace Lecture6.Services
                         st.FirstName = dr["FirstName"].ToString();
                         st.LastName = dr["LastName"].ToString();
                         st.IndexNumber = dr["IndexNumber"].ToString();
-                        //...
+
                         return st;
                     }
                 }
@@ -269,36 +214,5 @@ namespace Lecture6.Services
 
             return null;
         }
-
-        /*
-        private SqlDataReader Execute(string sqlString)
-        {
-            using (SqlConnection con = new SqlConnection(
-                            @"Server=localhost\SQLEXPRESS01;Integrated Security=true;"))
-            {
-                using (var com = new SqlCommand(sqlString))
-                {
-                    com.Connection = con;
-
-                    con.Open();
-                    var dr = com.ExecuteReader();
-                    return dr;
-                    
-                    while (dr.Read())
-                    {
-                        var st = new Student();
-                        st.FirstName = dr["FirstName"].ToString();
-                        st.LastName = dr["LastName"].ToString();
-                        st.IndexNumber = dr["IndexNumber"].ToString();
-                        //...
-                        _students.Add(st);
-                    }
-                    
-
-                    con.Close();
-                }
-            }
-        }
-        */
     }
 }

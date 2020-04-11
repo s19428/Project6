@@ -1,3 +1,0 @@
-/api/students/name1 GET  
-/api/students/name1 GET  
-/api/students/name2 GET  
