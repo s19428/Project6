@@ -45,6 +45,8 @@ namespace Lecture6
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbService service)
         {
+            service.ClearLog();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -65,12 +67,14 @@ namespace Lecture6
                 {
                     string index = context.Request.Headers[indexName].ToString();
 
-                    //...
                     // Check if this student is in the database
-                    //...
-
-                    // 401 if not found
-                    //return;
+                    if (service.GetStudentBy_IndexNumber(index) == null)
+                    {
+                        // 401 if not found
+                        context.Response.StatusCode = Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized;
+                        await context.Response.WriteAsync("Student with this indexNumber not found");
+                        return;
+                    }
                 }
                 await next();
             });

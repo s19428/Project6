@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lecture6.Helpers;
 
 namespace Lecture6.Middleware
 {
@@ -32,10 +33,11 @@ namespace Lecture6.Middleware
                     bodyStr = await reader.ReadToEndAsync();
                 }
                 // save to log file / log to database
-                service.SaveLogData("some data...");
+                service.SaveLogData(path + 
+                                    " " + method + 
+                                    " " + queryString +
+                                    " " + bodyStr); // includes logging to a file and to a database
             }
-
-
 
             if(_next!=null) await _next(context); //executes next middleware
         }

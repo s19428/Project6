@@ -14,5 +14,9 @@ namespace Lecture6.Services
         public Student GetStudentByIndex(string index);
 
         public void SaveLogData(string data);
+
+        public Student GetStudentBy_IndexNumber(string IndexNumber);
+
+        public void ClearLog();
     }
 }
